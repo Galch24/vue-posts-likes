@@ -9,11 +9,8 @@
     >
       <template #actions>
         <div class="flex">
-          <primary-button @click="handleLike(post.id)">
-            <like-icon />
-          </primary-button>
           <primary-button @click="handleDislike(post.id)">
-            <dislike-icon />
+            <cancel-icon />
           </primary-button>
         </div>
       </template>
@@ -22,7 +19,7 @@
       <div
         v-for="pageNumber in totalPages"
         :key="pageNumber"
-        class="rounded-md m-1 py-2 px-3 border-slate-400 border-solid border-2"
+        class="rounded-md m-1 py-1 px-3 border-slate-400 border-solid border-2"
         :class="{
           'current-page': page === pageNumber,
         }"
@@ -37,12 +34,12 @@
 
 <script>
 import PostItem from "@/components/PostItem";
-import LikeIcon from "@/components/icons/LikeIcon";
-import DislikeIcon from "@/components/icons/DislikeIcon";
 import { mapActions } from "vuex";
+import CancelIcon from "@/components/icons/CancelIcon";
 
 export default {
-  components: { PostItem, LikeIcon, DislikeIcon },
+  name: "PostDislikePost",
+  components: { CancelIcon, PostItem },
   props: {
     posts: {
       type: Array,
@@ -51,15 +48,7 @@ export default {
     },
     emptyListMessage: {
       type: String,
-      default: "Список публикаций пуст",
-    },
-    showLike: {
-      type: Boolean,
-      default: false,
-    },
-    showDislike: {
-      type: Boolean,
-      default: false,
+      default: "Список пуст",
     },
   },
   data() {
@@ -82,16 +71,12 @@ export default {
   methods: {
     ...mapActions({
       setPostLike: "post/setPostLike",
-      setPostDislike: "post/setPostDislike",
     }),
     changePage(pageNumber) {
       this.page = pageNumber - 1;
     },
-    handleLike(id) {
-      this.setPostLike(id);
-    },
     handleDislike(id) {
-      this.setPostDislike(id);
+      this.setPostLike(id);
     },
   },
 };
