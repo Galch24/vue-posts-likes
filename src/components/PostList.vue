@@ -21,14 +21,24 @@
       </div>
     </div>
   </div>
-  <h2 v-else style="color: red">Список публикаций пуст</h2>
+  <div v-else style="color: red">{{ emptyListMessage }}</div>
 </template>
 
 <script>
 import PostItem from "@/components/PostItem";
-import { mapActions, mapState } from "vuex";
 export default {
   components: { PostItem },
+  props: {
+    posts: {
+      type: Array,
+      required: true,
+      default: () => [],
+    },
+    emptyListMessage: {
+      type: String,
+      default: "Список публикаций пуст",
+    },
+  },
   data() {
     return {
       perPage: 5,
@@ -36,9 +46,6 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      posts: (state) => state.post.posts,
-    }),
     totalPages() {
       return Math.ceil(this.posts.length / this.perPage);
     },
@@ -50,9 +57,6 @@ export default {
     },
   },
   methods: {
-    ...mapActions({
-      fetchPosts: "post/fetchPosts",
-    }),
     changePage(pageNumber) {
       this.page = pageNumber - 1;
     },

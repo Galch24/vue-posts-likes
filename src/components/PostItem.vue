@@ -8,18 +8,32 @@
       <div><strong>Описание:</strong> {{ post.body }}</div>
     </div>
     <div class="post-actions">
-      <my-button @click="$emit('on-like', post)"> Лайк </my-button>
-      <my-button @click="$emit('on-dislike', post)"> Дизлайк </my-button>
+      <my-button @click="handleLike(post.id)"> Лайк </my-button>
+      <my-button @click="handleDislike(post.id)"> Дизлайк </my-button>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   props: {
     post: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    ...mapActions({
+      setPostLike: "post/setPostLike",
+      setPostDislike: "post/setPostDislike",
+    }),
+    handleLike(id) {
+      this.setPostLike(id);
+    },
+    handleDislike(id) {
+      this.setPostDislike(id);
     },
   },
 };

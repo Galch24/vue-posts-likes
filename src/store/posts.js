@@ -9,7 +9,11 @@ export const posts = {
     limit: 30,
     totalPages: 0,
   }),
-  getters: {},
+  getters: {
+    neutralPosts: (state) => state.posts.filter((item) => item.like === 0),
+    likePosts: (state) => state.posts.filter((item) => item.like > 0),
+    dislikePosts: (state) => state.posts.filter((item) => item.like < 0),
+  },
   mutations: {
     setPosts(state, posts) {
       state.posts = posts;
