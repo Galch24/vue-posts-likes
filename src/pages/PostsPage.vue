@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <h1>Список постов</h1>
-    <PostList :posts="neutralPosts" />
-    <h2>Избранное</h2>
-    <PostList :posts="likePosts" emptyListMessage="Список пуст" />
-    <h2>Список исключённого</h2>
-    <PostList :posts="dislikePosts" emptyListMessage="Список пуст" />
+  <div class="container">
+    <h1 class="text-2xl font-bold">Список постов</h1>
+    <PostList :posts="neutralPosts" show-dislike show-like />
+    <h2 class="text-xl font-bold mt-4">Понравилось</h2>
+    <PostList :posts="likePosts" emptyListMessage="Список пуст" show-dislike />
+    <h2 class="text-xl font-bold mt-4">Не понравилось</h2>
+    <PostList :posts="dislikePosts" emptyListMessage="Список пуст" show-like />
   </div>
 </template>
 

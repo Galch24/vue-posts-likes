@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="about max-w-2xl mx-auto bg-white rounded-md shadow-md p-6">
     <h1>Задание:</h1>
     <p>
       - В среде https://codesandbox.io/ или любой другой подобной, реализовать

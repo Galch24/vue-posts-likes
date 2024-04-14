@@ -1,3 +1,3 @@
-import MyButton from "@/components/UI/MyButton";
+import PrimaryButton from "@/components/UI/PrimaryButton";
 
-export default [MyButton];
+export default [PrimaryButton];

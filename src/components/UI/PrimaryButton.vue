@@ -1,18 +1,17 @@
 <template>
-  <button class="btn">
+  <button class="btn py-2 px-4 rounded-md m-1 border-lime-600">
     <slot></slot>
   </button>
 </template>
 
 <script>
 export default {
-  name: "MyButton",
+  name: "PrimaryButton",
 };
 </script>
 
 <style scoped>
 .btn {
-  padding: 10px 15px;
   background: none;
   color: teal;
   border: 1px solid teal;
