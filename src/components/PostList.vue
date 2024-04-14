@@ -1,7 +1,7 @@
 <template>
-  <div v-if="posts.length > 0">
+  <div v-if="filteredPosts.length > 0">
     <post-item
-      v-for="post in posts"
+      v-for="post in filteredPosts"
       :post="post"
       :key="post.id"
       @on-like="$emit('on-like', post)"
@@ -29,19 +29,32 @@ import PostItem from "@/components/PostItem";
 import { mapActions, mapState } from "vuex";
 export default {
   components: { PostItem },
+  data() {
+    return {
+      perPage: 5,
+      page: 0,
+    };
+  },
   computed: {
     ...mapState({
       posts: (state) => state.post.posts,
-      totalPages: (state) => state.post.totalPages,
-      page: (state) => state.post.page,
     }),
+    totalPages() {
+      return Math.ceil(this.posts.length / this.perPage);
+    },
+    filteredPosts() {
+      return this.posts.slice(
+        this.page * this.perPage,
+        (this.page + 1) * this.perPage
+      );
+    },
   },
   methods: {
     ...mapActions({
       fetchPosts: "post/fetchPosts",
     }),
     changePage(pageNumber) {
-      this.fetchPosts({ pageNumber });
+      this.page = pageNumber - 1;
     },
   },
 };

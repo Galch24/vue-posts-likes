@@ -6,12 +6,8 @@ export const posts = {
     isPostsLoading: false,
     searchQuery: "",
     page: 1,
-    limit: 5,
+    limit: 30,
     totalPages: 0,
-    sortOptions: [
-      { value: "title", name: "По названию" },
-      { value: "body", name: "По содержимому" },
-    ],
   }),
   getters: {},
   mutations: {
@@ -24,25 +20,34 @@ export const posts = {
     setPage(state, page) {
       state.page = page;
     },
+    setLimit(state, perPage) {
+      state.limit = perPage;
+    },
     setTotalPages(state, totalPages) {
       state.totalPages = totalPages;
     },
     setPostLike(state, id) {
-      state.posts = state.posts.map((item) => ({
-        ...item,
-        ...{ like: item.id === id ? 1 : item.like },
-      }));
+      state.posts = state.posts.map((item) => {
+        if (item.id === id) {
+          item.like = item.like === 1 ? item.like : item.like + 1;
+        }
+        return item;
+      });
     },
     setPostDislike(state, id) {
-      state.posts = state.posts.map((item) => ({
-        ...item,
-        ...{ like: item.id === id ? -1 : item.like },
-      }));
+      state.posts = state.posts.map((item) => {
+        if (item.id === id) {
+          item.like = item.like === -1 ? item.like : item.like - 1;
+        }
+        return item;
+      });
     },
   },
   actions: {
-    async fetchPosts({ state, commit }, { pageNumber }) {
+    async fetchPosts({ state, commit }, { pageNumber, limit }) {
       const pageNum = pageNumber || 1;
+      const perPage = limit || 5;
+      commit("setLimit", perPage);
       try {
         commit("setLoading", true);
         const response = await axios.get(

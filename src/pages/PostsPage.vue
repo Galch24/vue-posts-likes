@@ -16,16 +16,13 @@ export default {
   computed: {
     ...mapState({
       posts: (state) => state.post.posts,
-      totalPages: (state) => state.post.totalPages,
-      page: (state) => state.post.page,
     }),
   },
   mounted() {
-    this.fetchPosts({ pageNumber: 1 });
+    this.fetchPosts({ pageNumber: 1, limit: 20 });
   },
   methods: {
     ...mapActions({
-      loadMorePosts: "post/loadMorePosts",
       fetchPosts: "post/fetchPosts",
     }),
   },
